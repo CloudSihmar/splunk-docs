@@ -1,12 +1,12 @@
 --tokenize auth
-curl -k http://localhost:8088/services/collector -H "Authorization: Splunk 553e0e8e-9b4b-4dbb-9d28-dadd26e453d5" -d '{"sourcetype": "json", "event": "hello world!"}'
+curl -k http://localhost:8088/services/collector -H "Authorization: Splunk 75354410-23f0-40bc-82c1-23be60afa013" -d '{"sourcetype": "json", "event": "hello world!"}'
 
 
 --basic auth
-curl -k http://localhost:8088/services/collector -u "admin:553e0e8e-9b4b-4dbb-9d28-dadd26e453d5" -d '{"sourcetype": "json", "event": "hello world1!"}'
+curl -k http://localhost:8088/services/collector -u "admin:75354410-23f0-40bc-82c1-23be60afa013" -d '{"sourcetype": "json", "event": "hello world1!"}'
 
 --multiple events
-curl -k http://localhost:8088/services/collector -H "Authorization: Splunk 553e0e8e-9b4b-4dbb-9d28-dadd26e453d5" -d '[
+curl -k http://localhost:8088/services/collector -H "Authorization: Splunk 75354410-23f0-40bc-82c1-23be60afa013" -d '[
     {"sourcetype": "trial", "event": "hello world3!"},
     {"sourcetype": "trial", "event": "another event"},
     {"sourcetype": "trial", "event": "yet another event"}
@@ -16,7 +16,7 @@ curl -k http://localhost:8088/services/collector -H "Authorization: Splunk 553e0
 --raw text
 
 curl -k "http://localhost:8088/services/collector/raw?sourcetype=trial" \
--H "Authorization: Splunk 553e0e8e-9b4b-4dbb-9d28-dadd26e453d5" \
+-H "Authorization: Splunk 75354410-23f0-40bc-82c1-23be60afa013" \
 -d $'1\n2\n3\nHello, world again!'
 
 --------------------------------------------------------------------------------------
@@ -27,13 +27,15 @@ curl -k "http://localhost:8088/services/collector/raw?sourcetype=trial" \
 
 --indexer ack
 
-curl -k  "http://localhost:8088/services/collector?channel=3b73e041-8db9-4fc4-a7ea-c6802fdc34c7" -H "Authorization:Splunk 553e0e8e-9b4b-4dbb-9d28-dadd26e453d5" -d "{\"sourcetype\":  \"trial\",\"event\":\"hello world!\"}"
+curl -k "http://localhost:8088/services/collector?channel=bd9d3463-8ebc-42d1-8544-955b7a3e59d9" \
+-H "Authorization: Splunk 75354410-23f0-40bc-82c1-23be60afa013" \
+-d '{"sourcetype": "trial", "event": "hello world!"}'
 
 --- ack will work only once
 
-curl -k "http://localhost:8088/services/collector/ack?channel=3b73e041-8db9-4fc4-a7ea-c6802fdc34c7" \
--H "Authorization: Splunk 553e0e8e-9b4b-4dbb-9d28-dadd26e453d5" \
--d '{"acks": [0]}'
+curl -k "http://localhost:8088/services/collector/ack?channel=bd9d3463-8ebc-42d1-8544-955b7a3e59d9" \
+-H "Authorization: Splunk 75354410-23f0-40bc-82c1-23be60afa013" \
+-d '{"acks": [3]}'
 
 
 ------------------------------------------------------------------------------------------
@@ -44,17 +46,16 @@ disable indexer acknowledgement
 
 
 curl -k http://localhost:8088/services/collector \
--H "Authorization: Splunk 553e0e8e-9b4b-4dbb-9d28-dadd26e453d5" \
+-H "Authorization: Splunk 75354410-23f0-40bc-82c1-23be60afa013" \
 -d "{\"sourcetype\": \"_json\",\"event\": {\"a\": \"value1\", \"b\": [\"value1_1\", \"value1_2\"]}}"
 
 --Explicit JSON extraction
 
 curl -k http://localhost:8088/services/collector \
--H "Authorization: Splunk 553e0e8e-9b4b-4dbb-9d28-dadd26e453d5" \
+-H "Authorization: Splunk 75354410-23f0-40bc-82c1-23be60afa013" \
 -d '{"sourcetype": "trial","event":"hello world!","fields": {"device": "macbook", "users": ["joe", "bob"]}}'
 
 
 --debugging
  
 splunk/var/log/introspection/http_event_collector_metrics.log
-
